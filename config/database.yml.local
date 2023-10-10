@@ -1,0 +1,8 @@
+production:
+  adapter: "mysql2"
+  host: "<%= ENV["REDMINE_DB_MYSQL"] %>"
+  port: "3306"
+  username: "<%= ENV["REDMINE_DB_USERNAME"] %>"
+  password: "<%= ENV["REDMINE_DB_PASSWORD"] %>"
+  database: "<%= ENV["REDMINE_DB_DATABASE"] %>"
+  encoding: "<%= ENV["REDMINE_DB_ENCODING"] %>"

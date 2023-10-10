@@ -3,3 +3,65 @@
 Redmine is a flexible project management web application written using Ruby on Rails framework.
 
 More details can be found in the doc directory or on the official website http://www.redmine.org
+
+= Redmine Docker
+
+# Start Mysql
+
+```
+docker compose up db
+```
+
+# Start PHP my Admin
+
+```
+docker compose up pma
+```
+
+# Start Redmine Local with debug
+
+```
+docker compose up local-debug
+```
+
+# Start Redmine Local
+
+```
+docker compose up local
+```
+
+# Start Redmine Web with google-cloud
+
+```
+docker compose build web
+docker tag redminedocker-web gcr.io/{PROJECT_ID}/redminedocker-web
+docker push gcr.io/{PROJECT_ID}/redminedocker-web
+```
+
+*In console/sql -> create new SQL type Mysql 8.0*
+
+ADD Database redmine
+
+ADD User=redmine Password=Senhadobanco1
+
+*In console/cloud run -> create new service*
+
+select image in CONTAINER REGISTRY
+
+insert PORT 3000
+
+ADD ENVs:
+
+REDMINE_DB_MYSQL_SOCKET=/cloudsql/[YOUR_INSTANCE_CONNECTION_NAME]
+
+REDMINE_DB_USERNAME=redmine
+
+REDMINE_DB_PASSWORD=Senhadobanco1
+
+REDMINE_DB_ENCODING=utf8
+
+REDMINE_DB_DATABASE=redmine
+
+SECRET_KEY_BASE=4t543hy65tju76ujiyjytrgdsaxs
+
+select cloud sql instance [YOUR_INSTANCE_CONNECTION_NAME]

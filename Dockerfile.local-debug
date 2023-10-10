@@ -1,0 +1,35 @@
+FROM redmine:5.0.6
+
+WORKDIR "/usr/src/redmine/" 
+
+COPY . .
+
+COPY config/database.yml.local config/database.yml
+
+# COPY ./config/database.yml ./config/database.yml
+
+RUN chown redmine:redmine /usr/src/redmine/ -Rf 
+
+RUN ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+
+RUN apt update
+
+RUN apt install ruby-full -y
+
+RUN apt install build-essential -y
+
+COPY entrypoint.local-debug.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/entrypoint.local-debug.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.local-debug.sh"]  
+EXPOSE 3000
+
+# Escolha abaixo o modo:
+# Rodar servidor em modo de produção
+# CMD ["rails", "server", "-b", "0.0.0.0"]
+
+# Rodar servidor em modo DEBUG com vscode e plugin Ruby Peng Lv instalado no container
+# mais detalhes .vscode/README.rdoc, descomentar as 2 linhas abaixo e as indicadas no entrypoint.sh
+RUN touch log/debug.log
+CMD tail -f /usr/src/redmine/log/debug.log
+# Após atach no container do redmine rodar o comando abaixo no terminal
+# $ rdebug-ide --host 0.0.0.0 --port 1234 -- bin/rails s -p 3000 -b 0.0.0.0

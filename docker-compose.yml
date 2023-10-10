@@ -1,0 +1,66 @@
+version: '3.8'
+
+networks:
+  redmine:
+    external: true
+
+services:
+  web:
+    container_name: "redmine-latinoware"
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: .
+    networks:
+     - redmine
+    ports:
+     - "3000:3000"
+     - "1234:1234"
+    env_file:
+     - .env
+    links:
+     - db
+  local:
+    container_name: "redmine-latinoware-local"
+    build:
+      dockerfile: Dockerfile.local
+      context: .
+    networks:
+     - redmine
+    ports:
+     - "3000:3000"
+     - "1234:1234"
+    env_file:
+     - .env
+    links:
+     - db
+  local-debug:
+    container_name: "redmine-latinoware-local-debug"
+    build:
+      dockerfile: Dockerfile.local-debug
+      context: .
+    networks:
+     - redmine
+    ports:
+     - "3000:3000"
+     - "1234:1234"
+    env_file:
+     - .env
+    links:
+     - db
+  db:
+    image: mysql
+    networks:
+     - redmine
+    env_file:
+     - .env
+  pma:
+    image: phpmyadmin
+    links:
+      - db
+    networks:
+     - redmine
+    env_file:
+     - .env
+    ports:
+     - 8080:80

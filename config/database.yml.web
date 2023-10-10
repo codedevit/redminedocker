@@ -1,0 +1,9 @@
+production:
+  adapter: "mysql2"
+  socket: "<%= ENV["REDMINE_DB_MYSQL_SOCKET"] %>"
+  pool: 5
+  timeout: 5000
+  username: "<%= ENV["REDMINE_DB_USERNAME"] %>"
+  password: "<%= ENV["REDMINE_DB_PASSWORD"] %>"
+  database: "<%= ENV["REDMINE_DB_DATABASE"] %>"
+  encoding: "<%= ENV["REDMINE_DB_ENCODING"] %>"
