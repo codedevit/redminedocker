@@ -1,0 +1,16 @@
+//gem install 'ruby-debug-ide'
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Atach-my-App",
+        "type": "Ruby",
+        "request": "attach",
+        "remoteHost": "127.0.0.1",
+        "remotePort": "1234",
+        "remoteWorkspaceRoot": "${workspaceRoot}",
+        "cwd": "${workspaceRoot}",
+      }
+    ]
+  }
+  //rdebug-ide --debug --host 0.0.0.0 --port 1234 -- bin/rails server -p 3000 -b 0.0.0.0
